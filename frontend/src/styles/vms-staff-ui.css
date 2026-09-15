@@ -1,0 +1,579 @@
+/**
+ * VMS staff shell design system — visual primitives only.
+ * Scoped to .admin-main; public visitor routes unaffected.
+ */
+
+/* —— Semantic aliases (tokens defined in theme.css on .admin-main) —— */
+.admin-main {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main h1,
+.admin-main h2,
+.admin-main h3,
+.admin-main .admin-page-title,
+.admin-main .admin-section-title,
+.admin-main .section-card__title,
+.admin-main .metric-card__value {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main .kpi-stat-card__value {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main .admin-page-subtitle,
+.admin-main .metric-card__label,
+.admin-main .kpi-stat-card__label,
+.admin-main .section-card__empty,
+.admin-main .vms-text-secondary {
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.admin-main .vms-text-muted {
+  color: var(--vms-text-muted, var(--color-slate-400));
+}
+
+/* —— Section / panel cards —— */
+.section-card {
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-md, var(--radius-md));
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+}
+
+.section-card__header {
+  margin-bottom: 0.75rem;
+}
+
+.section-card__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.section-card__body {
+  min-height: 0;
+}
+
+.section-card__empty {
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1.25rem 0.5rem;
+  margin: 0;
+}
+
+.section-card--subtle {
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+  box-shadow: none;
+}
+
+.section-card__table .admin-table-wrap {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+/* Stat card = metric card */
+.stat-card,
+.metric-card {
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-sm, var(--radius-sm));
+  padding: 0.75rem 0.85rem;
+  min-height: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+}
+
+.stat-card__label,
+.metric-card__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--vms-text-secondary, var(--color-slate-500));
+  margin-bottom: 0.25rem;
+}
+
+.stat-card__value,
+.metric-card__value {
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* —— Page header toolbar —— */
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.admin-page-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.admin-page-subtitle {
+  font-size: 0.875rem;
+  margin: 0.25rem 0 0;
+  line-height: 1.4;
+}
+
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.admin-section-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+}
+
+.admin-section-stack {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .admin-two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* —— Tables —— */
+.admin-main .admin-table-wrap {
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-md, var(--radius-md));
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+}
+
+.admin-main .admin-table-wrap:has(.admin-section-title) {
+  padding: 1rem 1.25rem 0.75rem;
+}
+
+.admin-main .admin-table-wrap:has(.admin-section-title) .admin-table {
+  margin-top: 0.25rem;
+}
+
+.admin-main .admin-table th {
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--vms-text-secondary, var(--color-slate-500));
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+  border-bottom: 1px solid var(--vms-border, var(--color-slate-200));
+}
+
+.admin-main .admin-table td {
+  color: var(--vms-text-primary, var(--color-navy-900));
+  border-bottom: 1px solid var(--vms-border, var(--color-slate-200));
+}
+
+.admin-main .admin-table tbody tr:hover {
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+}
+
+/* —— Form controls —— */
+.admin-main input:not([type='checkbox']):not([type='radio']),
+.admin-main select,
+.admin-main textarea,
+.admin-main .admin-select,
+.admin-main .pref-select {
+  min-height: 36px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--vms-text-primary, var(--color-navy-900));
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-sm, var(--radius-sm));
+  line-height: 1.4;
+}
+
+.admin-main input::placeholder,
+.admin-main textarea::placeholder {
+  color: var(--vms-text-muted, var(--color-slate-400));
+}
+
+.admin-main input:focus-visible,
+.admin-main select:focus-visible,
+.admin-main textarea:focus-visible {
+  outline: 2px solid var(--vms-primary, var(--color-primary));
+  outline-offset: 1px;
+  border-color: var(--vms-primary, var(--color-primary));
+}
+
+.admin-main input[type='checkbox'],
+.admin-main input[type='radio'] {
+  accent-color: var(--vms-primary, var(--color-primary));
+}
+
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-md, var(--radius-md));
+}
+
+/* —— Buttons —— */
+.admin-main .admin-btn {
+  min-height: 36px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--vms-radius-sm, var(--radius-sm));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  background: var(--vms-surface, var(--color-white));
+  color: var(--vms-text-primary, var(--color-navy-900));
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.admin-main .admin-btn:hover:not(:disabled) {
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+}
+
+.admin-main .admin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.admin-main .admin-btn--primary {
+  background: var(--vms-primary, var(--color-primary));
+  border-color: var(--vms-primary, var(--color-primary));
+  color: #ffffff;
+}
+
+.admin-main .admin-btn--primary:hover:not(:disabled) {
+  background: var(--vms-primary-hover, var(--color-primary-hover));
+  border-color: var(--vms-primary-hover, var(--color-primary-hover));
+}
+
+.admin-main .admin-btn--secondary {
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+  border-color: var(--vms-border, var(--color-slate-200));
+}
+
+.admin-main .admin-btn--ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.admin-main .admin-btn--ghost:hover:not(:disabled) {
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+  border-color: var(--vms-border, var(--color-slate-200));
+}
+
+.admin-main .admin-btn--danger {
+  color: var(--vms-danger, var(--color-danger));
+  border-color: color-mix(in srgb, var(--vms-danger, #dc2626) 35%, transparent);
+  background: var(--vms-danger-soft, #fef2f2);
+}
+
+/* —— Status badges —— */
+.admin-main .status-badge--pending {
+  color: var(--vms-warning-text, #b45309);
+  background: var(--vms-warning-soft, #fffbeb);
+}
+
+.admin-main .status-badge--approved {
+  color: var(--vms-success-text, #047857);
+  background: var(--vms-success-soft, #ecfdf5);
+}
+
+.admin-main .status-badge--rejected {
+  color: var(--vms-danger-text, #b91c1c);
+  background: var(--vms-danger-soft, #fef2f2);
+}
+
+.admin-main .admin-badge--success {
+  color: var(--vms-success-text, #047857);
+  background: var(--vms-success-soft, #ecfdf5);
+}
+
+.admin-main .admin-badge--warning {
+  color: var(--vms-warning-text, #b45309);
+  background: var(--vms-warning-soft, #fffbeb);
+}
+
+.admin-main .admin-badge--danger {
+  color: var(--vms-danger-text, #b91c1c);
+  background: var(--vms-danger-soft, #fef2f2);
+}
+
+/* —— Empty / loading / error in staff shell —— */
+.admin-main .empty-state {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-md, var(--radius-md));
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+}
+
+.admin-main .empty-state__title {
+  color: var(--vms-text-primary, var(--color-navy-800));
+}
+
+.admin-main .empty-state__message {
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.admin-main .loading-state {
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.admin-main .error-state {
+  background: var(--vms-surface, var(--color-white));
+  border-color: var(--vms-border, var(--color-slate-200));
+}
+
+.admin-main .error-state__message {
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+/* —— Administration hub cards —— */
+.admin-main .admin-card-grid .admin-card,
+.admin-main a.admin-card {
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-md, var(--radius-md));
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.admin-main .admin-card-grid .admin-card:hover,
+.admin-main a.admin-card:hover {
+  border-color: color-mix(in srgb, var(--vms-primary, #2563eb) 35%, var(--vms-border, #e2e8f0));
+  box-shadow: var(--vms-shadow-md, var(--shadow-md));
+}
+
+.admin-card {
+  background: var(--vms-surface, var(--color-white));
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: var(--vms-radius-md, var(--radius-md));
+  padding: 1rem 1.25rem;
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+}
+
+/* —— Chart activity bars —— */
+.activity-chart {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 120px;
+  overflow-x: auto;
+  padding-top: 0.25rem;
+}
+
+.activity-chart__col {
+  flex: 1 0 24px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.activity-chart__bars {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 90px;
+  justify-content: center;
+}
+
+.activity-chart__bar-in {
+  width: 6px;
+  background: var(--vms-chart-primary, var(--color-navy-700));
+  border-radius: 2px 2px 0 0;
+}
+
+.activity-chart__bar-out {
+  width: 6px;
+  background: var(--vms-chart-secondary, var(--color-slate-400));
+  border-radius: 2px 2px 0 0;
+}
+
+.activity-chart__label {
+  font-size: 0.65rem;
+  margin-top: 4px;
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+/* Visitor Activity line chart */
+.visitor-activity-chart {
+  width: 100%;
+  min-height: 160px;
+}
+
+.visitor-activity-chart__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.visitor-activity-chart__grid line {
+  stroke: var(--vms-border, var(--color-slate-200));
+  stroke-width: 1;
+}
+
+.visitor-activity-chart__axis {
+  fill: var(--vms-text-secondary, var(--color-slate-500));
+  font-size: 10px;
+  font-family: inherit;
+}
+
+.visitor-activity-chart__axis--x {
+  font-size: 9px;
+}
+
+.visitor-activity-chart__line {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.visitor-activity-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  font-size: 0.75rem;
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.visitor-activity-chart__legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.visitor-activity-chart__legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.visitor-activity-chart__empty {
+  margin: 0;
+}
+
+.vms-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.8125rem;
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.vms-list--compact li {
+  margin-bottom: 0.25rem;
+}
+
+.vms-page-footer {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+}
+
+.admin-page {
+  max-width: 100%;
+}
+
+/* —— Profile / preferences —— */
+.admin-main .profile-card,
+.admin-main .pref-section {
+  background: var(--vms-surface, var(--color-white));
+  border-color: var(--vms-border, var(--color-slate-200));
+  box-shadow: var(--vms-shadow-sm, var(--shadow-sm));
+}
+
+.admin-main .profile-card__name,
+.admin-main .pref-section__title {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main .profile-card__email,
+.admin-main .pref-section__hint,
+.admin-main .profile-details__row dt {
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.admin-main .profile-details__row dd {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main .profile-tabs__btn {
+  background: var(--vms-surface, var(--color-white));
+  border-color: var(--vms-border, var(--color-slate-200));
+  color: var(--vms-text-primary, var(--color-navy-800));
+}
+
+.admin-main .profile-tabs__btn--active {
+  background: var(--vms-primary, var(--color-primary));
+  border-color: var(--vms-primary, var(--color-primary));
+  color: #ffffff;
+}
+
+.admin-main .pref-radio,
+.admin-main .pref-checkbox {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+/* —— Detail panels / modals —— */
+.admin-main .admin-detail-panel {
+  background: var(--vms-surface-elevated, var(--color-white));
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main .admin-detail-label {
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.admin-main .admin-detail-value {
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.admin-main .admin-qr-content {
+  background: var(--vms-surface-elevated, var(--color-white));
+  color: var(--vms-text-primary, var(--color-navy-900));
+}

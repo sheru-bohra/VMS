@@ -1,0 +1,189 @@
+{
+  "pages": [
+    {
+      "id": "visitor-registration",
+      "route": "/visit/register",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/visit/VisitorRegistrationPage.tsx",
+        "frontend/src/pages/visit/RegistrationSuccessPage.tsx",
+        "frontend/src/components/visit"
+      ],
+      "lockedAt": "2026-08-26T14:15:59.928Z",
+      "fileHashes": {
+        "frontend/src/pages/visit/VisitorRegistrationPage.tsx": "f723eb5eca8a1dc517036f8f8fcff34251b16ea1ac7818ec27441aff06af7cda",
+        "frontend/src/pages/visit/RegistrationSuccessPage.tsx": "b03f19c97ceb2a7e0a01a95237ea359cc5baf6df5727523628e973b453d8c1bc",
+        "frontend/src/components/visit/HostSearch.tsx": "ce3f9e26516dd9282d509f49e163d615419958f809b522997cf127634697881b",
+        "frontend/src/components/visit/PolicyModal.tsx": "996e22f7194d5da05cf82684f7ee72d48570138e5b1a29cb79decd26cb9dc9d2"
+      }
+    },
+    {
+      "id": "self-registrations",
+      "route": "/self-registrations",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/self-registrations"
+      ],
+      "lockedAt": "2026-08-27T18:09:22.793Z",
+      "fileHashes": {
+        "frontend/src/pages/self-registrations/SelfRegistrationQrPage.tsx": "ba467fd88acce164d0a1a5fb95f1806f7ff3ed73b30f7dcb9c17e217c27a4415",
+        "frontend/src/pages/self-registrations/SelfRegistrationSubnav.tsx": "14ff2f1993c1c7cc4384a311e75c13f41e8ef993048dfb0a0f75b6ab32e55aea",
+        "frontend/src/pages/self-registrations/SelfRegistrationsPage.tsx": "9003a13ede4a7db5ff01fe81b9a1b8994b6bce34ffde2f8a1c3df6998bb2b35d",
+        "frontend/src/pages/self-registrations/qrRegistrationUtils.ts": "e03944e744dd0daa8a895a9a2bd44cacfbdce6393b68aa5f1d30c1c52d4a5667"
+      }
+    },
+    {
+      "id": "approvals",
+      "route": "/approvals",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/approvals"
+      ],
+      "lockedAt": "2026-08-28T12:19:41.138Z",
+      "fileHashes": {
+        "frontend/src/pages/approvals/ApprovalsPage.tsx": "cd5f7f5132c3b7bceb620794685620dcdea9d99f14d0737d1a8a5a4f75e0710f"
+      }
+    },
+    {
+      "id": "expected-today",
+      "route": "/expected-today",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/expected-today"
+      ],
+      "lockedAt": "2026-08-27T18:09:23.077Z",
+      "fileHashes": {
+        "frontend/src/pages/expected-today/ExpectedTodayPage.tsx": "51ff1cb82f9d9a0d4faceeaa15c6980d7ece9333db706485c96bf14d1459d9cc"
+      }
+    },
+    {
+      "id": "onsite-now",
+      "route": "/onsite-now",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/onsite"
+      ],
+      "lockedAt": "2026-08-27T18:09:23.215Z",
+      "fileHashes": {
+        "frontend/src/pages/onsite/OnsiteNowPage.tsx": "2a7c4bf72f9e762dc4dd927ab14af72e4957b70e65951fb528516423148fbc03"
+      }
+    },
+    {
+      "id": "invitations",
+      "route": "/invitations",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/invitations"
+      ],
+      "lockedAt": "2026-08-27T18:09:23.355Z",
+      "fileHashes": {
+        "frontend/src/pages/invitations/CreateInvitationPage.tsx": "ee4381f637719cb0307a85455351cf53b30893f9db32502175e8278ec8d24a0b",
+        "frontend/src/pages/invitations/InvitationsPage.tsx": "6043cd1bf9b0e3a090e81078e874a6bbfefbb8f56ea38a264c71b31b89766da3"
+      }
+    },
+    {
+      "id": "visitor-invitation",
+      "route": "/visit/invitation",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/visit/VisitorInvitationPage.tsx"
+      ],
+      "lockedAt": "2026-08-26T14:16:00.741Z",
+      "fileHashes": {
+        "frontend/src/pages/visit/VisitorInvitationPage.tsx": "8f75b7c0449c55dc65be49adbc6c717cae267fe0de813574010ff5da33c88cdd"
+      }
+    },
+    {
+      "id": "badge-print",
+      "route": "/badges",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/badges",
+        "frontend/src/styles/badge-print.css"
+      ],
+      "lockedAt": "2026-08-26T14:16:01.003Z",
+      "fileHashes": {
+        "frontend/src/pages/badges/BadgePrintPage.tsx": "ca72a5e337e91e15f12479c0ff7e2586e17d8eb6154e22c876ddc5e380a73f59",
+        "frontend/src/styles/badge-print.css": "65f3af465bc9d9f71577b2efbed0b68b637f10b86c0f8cb92feb9c3febf98d94"
+      }
+    },
+    {
+      "id": "host-approval",
+      "route": "/host/approval",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/host/HostApprovalPage.tsx"
+      ],
+      "lockedAt": "2026-08-26T14:16:01.138Z",
+      "fileHashes": {
+        "frontend/src/pages/host/HostApprovalPage.tsx": "dc7b9d8d5ca0ed66dd7251abe3099408cccdae12831a2902900937b873dff824"
+      }
+    },
+    {
+      "id": "watchlist",
+      "route": "/watchlist",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/watchlist"
+      ],
+      "lockedAt": "2026-08-27T18:09:23.615Z",
+      "fileHashes": {
+        "frontend/src/pages/watchlist/WatchlistPage.tsx": "93fecd09423af8212db40fa3d8aea943231f97edfa6c1251e264eadb2bceadad"
+      }
+    },
+    {
+      "id": "security-review",
+      "route": "/security-review",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/security-review"
+      ],
+      "lockedAt": "2026-08-27T18:09:23.755Z",
+      "fileHashes": {
+        "frontend/src/pages/security-review/SecurityReviewPage.tsx": "fcc303c4ab7f7afea3a7669348f9361bf16409089531a81e256c1f62acfc3a2c"
+      }
+    },
+    {
+      "id": "vendors-contractors",
+      "route": "/vendors-contractors",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/vendors"
+      ],
+      "lockedAt": "2026-08-27T18:09:23.896Z",
+      "fileHashes": {
+        "frontend/src/pages/vendors/ComplianceDetailPanel.tsx": "f70bfac6fe4b950d0876246fcd9a3103674a43d520ce39c4e7919938eedd8ed0",
+        "frontend/src/pages/vendors/ComplianceRequirementsPanel.tsx": "f0f16451d66cb6152b52f3fb8b405e05467cd49f8f5e3c3139a947db34aeb2bc",
+        "frontend/src/pages/vendors/CreateVendorVisitPage.tsx": "558023867b317546aeeabfe8dcffca10d8342126cd804e84b18d4b99b72a1e91",
+        "frontend/src/pages/vendors/VendorsContractorsPage.tsx": "3b9cebfa19dc2a1f019def98d73e6c0129c9f018260e8d32f7dae0ba23bcc982",
+        "frontend/src/pages/vendors/complianceUtils.ts": "b262bbc64eeb4edfde268da2bf10748c2c6732e0d6e7b22fd05d775fec7ee7d2"
+      }
+    },
+    {
+      "id": "vendor-visit-create",
+      "route": "/vendors-contractors/new-visit",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/vendors/CreateVendorVisitPage.tsx"
+      ],
+      "lockedAt": "2026-08-27T18:09:24.035Z",
+      "fileHashes": {
+        "frontend/src/pages/vendors/CreateVendorVisitPage.tsx": "558023867b317546aeeabfe8dcffca10d8342126cd804e84b18d4b99b72a1e91"
+      }
+    },
+    {
+      "id": "locations",
+      "route": "/locations",
+      "status": "LOCKED",
+      "paths": [
+        "frontend/src/pages/locations",
+        "frontend/src/styles/locations-page.css"
+      ],
+      "lockedAt": "2026-08-27T17:54:07.596Z",
+      "fileHashes": {
+        "frontend/src/pages/locations/LocationsPage.tsx": "67dcfb3d16b56461997560a1233e2ee15b1df9b5635023685f39e75139acf662",
+        "frontend/src/styles/locations-page.css": "03212e6b536be1581e844dfa2cf9104a358097241b508e184fd565b0244af0e4"
+      }
+    }
+  ]
+}

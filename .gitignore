@@ -1,0 +1,63 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/.venv/
+backend/venv/
+
+# Build outputs
+frontend/dist/
+frontend/build/
+*.pyc
+__pycache__/
+*.pyo
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Release candidate artifacts (generated)
+artifacts/
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.docker.local
+!.env.example
+!.env.production.example
+!.env.staging.example
+!.env.docker.example
+
+# Database and runtime data
+data/*
+!data/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Test / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+
+# Logs
+*.log
+logs/
+
+# Python
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+
+# Docker local overrides
+docker-compose.override.yml

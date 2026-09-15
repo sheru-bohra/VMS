@@ -1,0 +1,43 @@
+{
+  "name": "vms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Visitor Management System",
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && python3 -m pip install -r requirements.txt",
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 7273",
+    "dev:frontend": "cd frontend && npm run dev",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && python3 -m pytest tests/ -v",
+    "test:frontend": "cd frontend && npm run test",
+    "page:lock": "node scripts/lock-page.mjs",
+    "page:verify": "node scripts/verify-page-locks.mjs",
+    "migrate": "cd backend && python3 -m alembic upgrade head",
+    "migrate:create": "cd backend && python3 -m alembic revision --autogenerate -m",
+    "audit:seal": "node scripts/audit-seal.mjs",
+    "audit:verify": "node scripts/audit-verify.mjs",
+    "security:check": "node scripts/security-check.mjs",
+    "build": "cd frontend && npm run build",
+    "production:check": "node scripts/production-check.mjs",
+    "test:postgres": "node scripts/test-postgres.mjs",
+    "pg:restore-rehearsal": "cd backend && python3 scripts/pg_backup_restore_rehearsal.py",
+    "closure:matrix": "cd backend && python3 scripts/generate_closure_matrix.py",
+    "frontend:secret-scan": "node scripts/frontend-secret-scan.mjs",
+    "repo:secret-scan": "node scripts/repo-secret-scan.mjs",
+    "docker:config": "docker compose --env-file .env.docker.local config",
+    "docker:smoke": "bash scripts/docker-smoke.sh",
+    "test:release": "node scripts/test-release.mjs",
+    "perf:smoke": "node scripts/perf-smoke.mjs",
+    "rc:check": "node scripts/rc-check.mjs",
+    "test:clamav-live": "node scripts/test-clamav-live.mjs",
+    "test:graph-live": "node scripts/test-graph-live.mjs",
+    "seed:manual-uat": "cd backend && python3 scripts/manual_uat_seed.py seed",
+    "cleanup:manual-uat": "cd backend && python3 scripts/manual_uat_seed.py cleanup",
+    "smoke:local-ui": "cd frontend && npm run test -- src/test/route-wiring.test.tsx",
+    "test:register-visitor": "cd backend && python3 -m pytest tests/test_register_visitor.py tests/test_register_visitor_submission.py -q && cd ../frontend && npm run test -- --run src/test/register-visitor-policy.test.ts src/test/register-visitor.test.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,0 +1,308 @@
+/**
+ * Global staff UI enrichment — scoped to .vms-page-shell so finalized Locations page stays unchanged.
+ */
+
+.vms-page-shell {
+  max-width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+/* —— Page rhythm —— */
+.vms-page-shell .admin-page-header,
+.vms-page-shell .vms-page-header {
+  margin-bottom: 1.25rem;
+}
+
+.vms-page-shell .admin-page-title,
+.vms-page-shell .vms-page-header__title {
+  font-size: 1.625rem;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.vms-page-shell .admin-page-subtitle,
+.vms-page-shell .vms-page-header__subtitle {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  margin-top: 0.35rem;
+}
+
+/* —— Access & Badge Administration button tabs —— */
+.vms-page-shell .access-badges-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+}
+
+/* —— Tab bar (replaces cramped chip/button tabs) —— */
+.vms-tab-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0;
+  border-bottom: 1px solid var(--vms-border, var(--color-slate-200));
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.vms-tab {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 42px;
+  padding: 0.5rem 1rem;
+  margin-bottom: -1px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--vms-text-secondary, var(--color-slate-500));
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.vms-tab:hover {
+  color: var(--vms-text-primary, var(--color-navy-900));
+  background: var(--vms-surface-subtle, var(--color-slate-50));
+}
+
+.vms-tab:focus-visible {
+  outline: 2px solid var(--vms-primary, var(--color-primary));
+  outline-offset: 2px;
+}
+
+.vms-tab--active {
+  color: var(--vms-primary, var(--color-primary));
+  border-bottom-color: var(--vms-primary, var(--color-primary));
+  font-weight: 600;
+}
+
+.vms-tab__count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+  color: var(--vms-text-secondary, var(--color-slate-500));
+}
+
+.vms-tab--active .vms-tab__count {
+  background: color-mix(in srgb, var(--vms-primary, #2563eb) 12%, transparent);
+  color: var(--vms-primary, var(--color-primary));
+}
+
+/* —— Legacy admin-tabs enhancement inside enriched pages —— */
+.vms-page-shell .admin-tabs {
+  gap: 0.375rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--vms-border, var(--color-slate-200));
+}
+
+.vms-page-shell .admin-tab {
+  min-height: 42px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* —— Tables —— */
+.vms-page-shell .admin-table th,
+.vms-page-shell .admin-table td {
+  padding: 0.8125rem 1rem;
+  vertical-align: middle;
+}
+
+.vms-page-shell .admin-table tbody tr[style*='cursor: default'] {
+  cursor: default;
+}
+
+.vms-page-shell .admin-table-wrap {
+  margin-bottom: 1rem;
+  border-radius: 12px;
+}
+
+/* —— Filters —— */
+.vms-page-shell .admin-filters {
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+}
+
+.vms-page-shell .admin-filters input,
+.vms-page-shell .admin-filters select {
+  min-height: 40px;
+}
+
+/* —— Section cards —— */
+.vms-page-shell .section-card {
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.25rem;
+}
+
+.vms-page-shell .admin-card {
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+}
+
+/* —— Status badges —— */
+.vms-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.vms-status-badge--approved {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.22);
+}
+
+.vms-status-badge--pending {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.vms-status-badge--rejected {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.22);
+}
+
+.vms-status-badge--onsite {
+  color: #0f766e;
+  background: rgba(20, 184, 166, 0.1);
+  border-color: rgba(20, 184, 166, 0.22);
+}
+
+.vms-status-badge--info {
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.22);
+}
+
+.vms-status-badge--warning {
+  color: #c2410c;
+  background: rgba(249, 115, 22, 0.1);
+  border-color: rgba(249, 115, 22, 0.22);
+}
+
+.vms-status-badge--neutral {
+  color: var(--vms-text-secondary, var(--color-slate-600));
+  background: var(--vms-surface-subtle, var(--color-slate-100));
+  border-color: var(--vms-border, var(--color-slate-200));
+}
+
+/* —— Info / action chips (retention etc.) —— */
+.vms-info-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  background: var(--vms-surface-subtle, var(--color-slate-50));
+  color: var(--vms-text-primary, var(--color-navy-800));
+}
+
+/* —— Readiness rows —— */
+.vms-readiness-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.vms-readiness-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--vms-border, var(--color-slate-200));
+  border-radius: 10px;
+  background: var(--vms-surface, var(--color-white));
+}
+
+.vms-readiness-row__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--vms-text-primary, var(--color-navy-900));
+}
+
+.vms-readiness-row__detail {
+  font-size: 0.8125rem;
+  color: var(--vms-text-secondary, var(--color-slate-500));
+  margin-top: 0.15rem;
+}
+
+/* —— Table action cluster —— */
+.vms-table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  align-items: center;
+}
+
+/* —— Dark theme badges —— */
+[data-theme='dark'] .vms-status-badge--approved {
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+[data-theme='dark'] .vms-status-badge--pending {
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+[data-theme='dark'] .vms-status-badge--rejected {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+[data-theme='dark'] .vms-status-badge--onsite {
+  color: #5eead4;
+  background: rgba(20, 184, 166, 0.15);
+  border-color: rgba(20, 184, 166, 0.32);
+}
+
+[data-theme='dark'] .vms-status-badge--info {
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.32);
+}
+
+[data-theme='dark'] .vms-info-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--vms-border, var(--color-slate-700));
+}
+
+[data-theme='dark'] .vms-readiness-row {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--vms-border, var(--color-slate-700));
+}
+
+@media (max-width: 768px) {
+  .vms-page-shell .admin-page-title,
+  .vms-page-shell .vms-page-header__title {
+    font-size: 1.375rem;
+  }
+}

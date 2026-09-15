@@ -1,0 +1,187 @@
+/* Staff shell theme — sidebar always retains VMS dark navy; content theme scoped to .admin-main */
+
+/* Sidebar: fixed VMS identity — never inverted by light/dark content theme */
+.admin-layout .admin-sidebar {
+  --vms-sidebar-bg: #0f172a;
+  --vms-sidebar-text: #ffffff;
+  --vms-sidebar-text-muted: #94a3b8;
+  --vms-sidebar-hover: #1e293b;
+  --vms-sidebar-active: #334155;
+  --color-navy-900: #0f172a;
+  --color-navy-800: #1e293b;
+  --color-navy-700: #334155;
+  --color-navy-600: #475569;
+  --color-slate-400: #94a3b8;
+  --color-white: #ffffff;
+  background: var(--vms-sidebar-bg);
+  color: var(--vms-sidebar-text);
+}
+
+/* Light workspace — default approved VMS staff appearance */
+.admin-layout[data-theme='light'] .admin-main,
+.admin-layout:not([data-theme='dark']) .admin-main {
+  --color-white: #ffffff;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-navy-900: #0f172a;
+  --color-navy-800: #1e293b;
+  --color-navy-700: #334155;
+  --color-navy-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --vms-page-bg: #f1f5f9;
+  --vms-surface: #ffffff;
+  --vms-surface-subtle: #f8fafc;
+  --vms-surface-elevated: #ffffff;
+  --vms-text-primary: #0f172a;
+  --vms-text-secondary: #64748b;
+  --vms-text-muted: #94a3b8;
+  --vms-border: #e2e8f0;
+  --vms-border-strong: #cbd5e1;
+  --vms-primary: #00a36c;
+  --vms-primary-hover: #008f5d;
+  --vms-success-text: #047857;
+  --vms-success-soft: #ecfdf5;
+  --vms-warning-text: #b45309;
+  --vms-warning-soft: #fffbeb;
+  --vms-danger-text: #b91c1c;
+  --vms-danger-soft: #fef2f2;
+  --vms-chart-primary: #334155;
+  --vms-chart-secondary: #94a3b8;
+  --vms-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --vms-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --vms-radius-sm: var(--radius-sm);
+  --vms-radius-md: var(--radius-md);
+}
+
+.admin-layout[data-theme='light'] .admin-main .admin-topbar,
+.admin-layout:not([data-theme='dark']) .admin-main .admin-topbar {
+  background: #ffffff;
+  border-bottom-color: #e2e8f0;
+}
+
+.admin-layout[data-theme='light'] .admin-main .admin-content,
+.admin-layout:not([data-theme='dark']) .admin-main .admin-content {
+  background: #f1f5f9;
+}
+
+/* Dark workspace — scoped to main shell; sidebar stays dark navy */
+.admin-layout[data-theme='dark'] .admin-main {
+  --color-white: #1e293b;
+  --color-slate-100: #0f172a;
+  --color-slate-200: #334155;
+  --color-navy-900: #f8fafc;
+  --color-navy-800: #e2e8f0;
+  --color-navy-700: #cbd5e1;
+  --color-navy-600: #94a3b8;
+  --color-slate-500: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --vms-page-bg: #0f172a;
+  --vms-surface: #1e293b;
+  --vms-surface-subtle: #162032;
+  --vms-surface-elevated: #243044;
+  --vms-text-primary: #f8fafc;
+  --vms-text-secondary: #cbd5e1;
+  --vms-text-muted: #94a3b8;
+  --vms-border: #475569;
+  --vms-border-strong: #64748b;
+  --vms-primary: #34d399;
+  --vms-primary-hover: #10b981;
+  --vms-success-text: #6ee7b7;
+  --vms-success-soft: rgba(16, 185, 129, 0.18);
+  --vms-warning-text: #fcd34d;
+  --vms-warning-soft: rgba(251, 191, 36, 0.16);
+  --vms-danger-text: #fca5a5;
+  --vms-danger-soft: rgba(248, 113, 113, 0.16);
+  --vms-chart-primary: #94a3b8;
+  --vms-chart-secondary: #64748b;
+  --vms-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --vms-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --vms-radius-sm: var(--radius-sm);
+  --vms-radius-md: var(--radius-md);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .admin-topbar {
+  background: var(--color-white);
+  border-bottom-color: var(--color-slate-200);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .admin-content {
+  background: var(--color-slate-100);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .admin-table th {
+  background: var(--vms-surface-subtle);
+  color: var(--vms-text-secondary);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .admin-table tbody tr:hover {
+  background: var(--vms-surface-elevated);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .pref-select,
+.admin-layout[data-theme='dark'] .admin-main select,
+.admin-layout[data-theme='dark'] .admin-main input:not([type='checkbox']):not([type='radio']),
+.admin-layout[data-theme='dark'] .admin-main textarea {
+  background: var(--vms-surface-elevated);
+  border-color: var(--vms-border);
+  color: var(--vms-text-primary);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .profile-menu__trigger:hover {
+  background: var(--vms-surface-elevated);
+  border-color: var(--vms-border);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .profile-menu__dropdown,
+.admin-layout[data-theme='dark'] .admin-main .profile-card,
+.admin-layout[data-theme='dark'] .admin-main .pref-section,
+.admin-layout[data-theme='dark'] .admin-main .admin-table-wrap,
+.admin-layout[data-theme='dark'] .admin-main .section-card,
+.admin-layout[data-theme='dark'] .admin-main .empty-state,
+.admin-layout[data-theme='dark'] .admin-main .admin-card,
+.admin-layout[data-theme='dark'] .admin-main .metric-card,
+.admin-layout[data-theme='dark'] .admin-main .stat-card,
+.admin-layout[data-theme='dark'] .admin-main .kpi-stat-card,
+.admin-layout[data-theme='dark'] .admin-main .admin-filters {
+  background: var(--vms-surface);
+  border-color: var(--vms-border);
+}
+
+.admin-layout[data-theme='dark'] .admin-main .profile-menu__item:hover,
+.admin-layout[data-theme='dark'] .admin-main .profile-menu__subitem:hover {
+  background: var(--vms-surface-elevated);
+}
+
+/* Compact density — staff shell only */
+.admin-layout[data-density='compact'] .admin-table th,
+.admin-layout[data-density='compact'] .admin-table td {
+  padding: 0.45rem 0.75rem;
+}
+
+.admin-layout[data-density='compact'] .admin-content {
+  padding: 0.75rem 1rem;
+}
+
+.admin-layout[data-density='compact'] .admin-page-header {
+  margin-bottom: 0.75rem;
+}
+
+.admin-layout[data-density='compact'] .profile-card,
+.admin-layout[data-density='compact'] .pref-section {
+  padding: 0.85rem 1rem;
+}
+
+/* Reduced motion */
+.admin-layout[data-reduced-motion='true'] *,
+.admin-layout[data-reduced-motion='true'] *::before,
+.admin-layout[data-reduced-motion='true'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}

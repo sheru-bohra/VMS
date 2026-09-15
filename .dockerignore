@@ -1,0 +1,45 @@
+# Git and local secrets
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+!.env.production.example
+!.env.staging.example
+!.env.docker.example
+
+# Dependencies and build artifacts
+node_modules
+frontend/node_modules
+frontend/dist
+backend/.venv
+backend/venv
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.coverage
+htmlcov
+coverage
+dist
+build
+artifacts
+
+# Local runtime data
+data
+*.db
+*.sqlite
+*.sqlite3
+*.log
+logs
+
+# IDE and OS
+.idea
+.vscode
+.DS_Store
+*.swp
+
+# Docs and CI-only (not needed in image layers)
+docs
+.github

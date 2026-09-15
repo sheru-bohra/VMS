@@ -1,0 +1,90 @@
+# Production-oriented local/staging validation stack (PostgreSQL + VMS).
+# Run migrations once before starting the backend:
+#   docker compose --env-file .env.docker.local run --rm migrate
+# Then start services:
+#   docker compose --env-file .env.docker.local up -d
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: vms
+      POSTGRES_USER: vms
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - vms_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U vms -d vms']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  migrate:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+psycopg://vms:${POSTGRES_PASSWORD}@postgres:5432/vms
+    command: ['python', '-m', 'alembic', 'upgrade', 'head']
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles: ['tools']
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      APP_RELEASE_VERSION: ${APP_RELEASE_VERSION:-1.0.0-rc1}
+      DATABASE_URL: postgresql+psycopg://vms:${POSTGRES_PASSWORD}@postgres:5432/vms
+      AUTH_MODE: ${AUTH_MODE:-vms_native}
+      DEV_AUTH_ENABLED: ${DEV_AUTH_ENABLED:-false}
+      VMS_NATIVE_AUTH_ENABLED: ${VMS_NATIVE_AUTH_ENABLED:-true}
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-smtp}
+      PUBLIC_APP_BASE_URL: ${PUBLIC_APP_BASE_URL:-https://localhost:7272}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-https://localhost:7272}
+      SCHEMA_CHECK_ON_STARTUP: ${SCHEMA_CHECK_ON_STARTUP:-true}
+      RATE_LIMIT_BACKEND: ${RATE_LIMIT_BACKEND:-database}
+      FILE_SCANNER_PROVIDER: ${FILE_SCANNER_PROVIDER:-clamav}
+      CLAMAV_HOST: ${CLAMAV_HOST:-clamav}
+      CLAMAV_PORT: ${CLAMAV_PORT:-3310}
+      AI_ENABLED: ${AI_ENABLED:-false}
+      AI_PROVIDER: ${AI_PROVIDER:-disabled}
+      ACCESS_CONTROL_ENABLED: ${ACCESS_CONTROL_ENABLED:-false}
+      BADGE_PRINTER_ENABLED: ${BADGE_PRINTER_ENABLED:-false}
+      BACKGROUND_SCHEDULER_ENABLED: ${BACKGROUND_SCHEDULER_ENABLED:-true}
+      RETENTION_AUTOMATION_ENABLED: ${RETENTION_AUTOMATION_ENABLED:-false}
+      AUDIT_INTEGRITY_KEY: ${AUDIT_INTEGRITY_KEY:?AUDIT_INTEGRITY_KEY is required}
+      DOCUMENT_ENCRYPTION_KEY: ${DOCUMENT_ENCRYPTION_KEY:?DOCUMENT_ENCRYPTION_KEY is required}
+      VMS_DATA_ENCRYPTION_KEY: ${VMS_DATA_ENCRYPTION_KEY:?VMS_DATA_ENCRYPTION_KEY is required}
+      GLOBAL_ADMIN_INITIAL_PASSWORD: ${GLOBAL_ADMIN_INITIAL_PASSWORD:-}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    volumes:
+      - vms_uploads:/app/data/uploads
+    ports:
+      - '${BACKEND_HOST_PORT:-7273}:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_AUTH_MODE: ${VITE_AUTH_MODE:-vms_native}
+        VITE_ENABLE_SOURCEMAPS: ${VITE_ENABLE_SOURCEMAPS:-false}
+    restart: unless-stopped
+    ports:
+      - '${FRONTEND_HOST_PORT:-7272}:8080'
+    depends_on:
+      - backend
+
+volumes:
+  vms_pg_data:
+  vms_uploads:
