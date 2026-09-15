@@ -22,5 +22,9 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
+    env: {
+      VITE_AUTH_MODE: 'vms_native',
+      VITE_ENABLE_SOURCEMAPS: 'false',
+    },
   },
 });

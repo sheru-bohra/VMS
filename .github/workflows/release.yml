@@ -50,15 +50,24 @@ jobs:
 
       - name: Backend tests
         run: npm run test:backend
+        env:
+          AUDIT_INTEGRITY_KEY: ci-test-audit-integrity-key-32chars-min
+          DOCUMENT_ENCRYPTION_KEY: ci-test-document-encryption-key-32
 
       - name: Frontend tests
         run: npm run test:frontend
+        env:
+          VITE_AUTH_MODE: vms_native
+          VITE_ENABLE_SOURCEMAPS: false
 
       - name: Page lock verification
         run: npm run page:verify
 
       - name: Frontend production build
         run: npm run build
+        env:
+          VITE_AUTH_MODE: vms_native
+          VITE_ENABLE_SOURCEMAPS: false
 
       - name: Frontend bundle secret scan
         run: npm run frontend:secret-scan
