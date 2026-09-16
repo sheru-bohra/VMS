@@ -65,9 +65,9 @@ describe('Phase 14.1 Access Profile CRUD UI', () => {
     );
     await waitFor(() => expect(screen.getByText('Access & Badge Administration')).toBeInTheDocument());
     fireEvent.click(screen.getByText('Create profile'));
-    const inputs = document.querySelectorAll('.admin-input');
-    fireEvent.change(inputs[1], { target: { value: 'VIP Visitor' } });
-    fireEvent.change(inputs[3], { target: { value: 'VIP' } });
+    await waitFor(() => expect(screen.getByText('Create Access Profile')).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText('Profile name'), { target: { value: 'VIP Visitor' } });
+    fireEvent.change(screen.getByLabelText('Provider profile reference'), { target: { value: 'VIP' } });
     fireEvent.click(screen.getByText('Save'));
     await waitFor(() => expect(api.createAccessProfile).toHaveBeenCalled());
   });
