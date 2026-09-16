@@ -368,18 +368,18 @@ def test_site_admin_cannot_reset_other_password(client):
     assert reset.status_code == 403
 
 
-def test_short_bootstrap_password_requires_change(client, monkeypatch):
+def test_short_bootstrap_owner_password_does_not_force_change(client, monkeypatch):
     c, session_factory = client
     monkeypatch.setattr(settings, "global_admin_initial_password", "shortpw")
     db = session_factory()
     _seed(db)
     owner = db.query(AdminUser).filter(AdminUser.email == OWNER_EMAIL).first()
-    assert owner.force_password_change is True
+    assert owner.force_password_change is False
     db.close()
 
     login = _login(c, OWNER_EMAIL, "shortpw")
     assert login.status_code == 200
-    assert login.json()["force_password_change"] is True
+    assert login.json()["force_password_change"] is False
 
 
 def test_owner_stale_hash_reprovisioned_from_env(client, monkeypatch):
@@ -391,6 +391,7 @@ def test_owner_stale_hash_reprovisioned_from_env(client, monkeypatch):
 
     owner = ensure_permanent_owner(db)
     owner.password_hash = hash_password("Stale-Password-From-Old-Phase-12")
+    owner.owner_password_user_established = False
     owner.initial_credential_provisioned_at = None
     owner.password_changed_at = None
     owner.force_password_change = False
@@ -403,13 +404,64 @@ def test_owner_stale_hash_reprovisioned_from_env(client, monkeypatch):
     reprovision(db)
     db.commit()
     owner = db.query(AdminUser).filter(AdminUser.email == OWNER_EMAIL).first()
-    assert owner.initial_credential_provisioned_at is not None
+    assert owner.owner_password_user_established is False
     db.close()
 
     assert _login(c, OWNER_EMAIL, TEST_PASSWORD).status_code == 200
 
 
-def test_owner_password_not_reset_after_established_credential(client, monkeypatch):
+def test_owner_password_survives_application_restart(client, monkeypatch):
+    """Regression: owner password must survive normal bootstrap restarts."""
+    c, session_factory = client
+    monkeypatch.setattr(settings, "global_admin_initial_password", TEST_PASSWORD)
+    db = session_factory()
+    from app.application.bootstrap import ensure_permanent_owner
+
+    ensure_permanent_owner(db)
+    db.commit()
+    db.close()
+
+    assert _login(c, OWNER_EMAIL, TEST_PASSWORD).status_code == 200
+
+    db = session_factory()
+    ensure_permanent_owner(db)
+    db.commit()
+    db.close()
+    assert _login(c, OWNER_EMAIL, TEST_PASSWORD).status_code == 200
+
+    new_password = "Owner-Restart-Password-12"
+    login = _login(c, OWNER_EMAIL, TEST_PASSWORD)
+    token = login.json()["access_token"]
+    change = c.post(
+        "/api/auth/change-password",
+        headers={"Authorization": f"Bearer {token}"},
+        json={
+            "current_password": TEST_PASSWORD,
+            "new_password": new_password,
+            "confirm_password": new_password,
+        },
+    )
+    assert change.status_code == 200
+
+    db = session_factory()
+    owner = db.query(AdminUser).filter(AdminUser.email == OWNER_EMAIL).first()
+    assert owner.owner_password_user_established is True
+    ensure_permanent_owner(db)
+    db.commit()
+    db.close()
+
+    assert _login(c, OWNER_EMAIL, TEST_PASSWORD).status_code == 401
+    assert _login(c, OWNER_EMAIL, new_password).status_code == 200
+
+    db = session_factory()
+    ensure_permanent_owner(db)
+    db.commit()
+    db.close()
+    assert _login(c, OWNER_EMAIL, new_password).status_code == 200
+    assert _login(c, OWNER_EMAIL, TEST_PASSWORD).status_code == 401
+
+
+def test_owner_password_not_reset_after_user_established_credential(client, monkeypatch):
     c, session_factory = client
     monkeypatch.setattr(settings, "global_admin_initial_password", TEST_PASSWORD)
     custom_password = "Owner-Custom-Password-12"
@@ -419,6 +471,7 @@ def test_owner_password_not_reset_after_established_credential(client, monkeypat
 
     owner = ensure_permanent_owner(db)
     set_user_password(db, owner, custom_password, clear_force_change=True)
+    assert owner.owner_password_user_established is True
     db.commit()
     db.close()
 
@@ -431,6 +484,37 @@ def test_owner_password_not_reset_after_established_credential(client, monkeypat
 
     assert _login(c, OWNER_EMAIL, custom_password).status_code == 200
     assert _login(c, OWNER_EMAIL, TEST_PASSWORD).status_code == 401
+
+
+def test_owner_password_never_expires_automatically(client):
+    c, session_factory = client
+    db = session_factory()
+    owner = _seed(db)
+    assert owner.force_password_change is False
+    db.close()
+
+    login = _login(c, OWNER_EMAIL, TEST_PASSWORD)
+    assert login.status_code == 200
+    assert login.json()["force_password_change"] is False
+
+
+def test_owner_initial_provision_audit_event(client, monkeypatch):
+    c, session_factory = client
+    monkeypatch.setattr(settings, "global_admin_initial_password", TEST_PASSWORD)
+    db = session_factory()
+    from app.application.bootstrap import ensure_permanent_owner
+    from app.domain.models import AuditEvent
+
+    ensure_permanent_owner(db)
+    db.commit()
+    events = (
+        db.query(AuditEvent)
+        .filter(AuditEvent.action == "OWNER_INITIAL_CREDENTIAL_PROVISIONED")
+        .all()
+    )
+    assert events
+    assert "password" not in (events[0].metadata_json or "").lower()
+    db.close()
 
 
 def test_login_failure_audit_event(client):

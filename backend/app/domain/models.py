@@ -24,6 +24,7 @@ class AdminUser(Base):
     initial_credential_provisioned_at: Mapped[Optional[datetime]] = mapped_column(
         DateTime(timezone=True), nullable=True
     )
+    owner_password_user_established: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     force_password_change: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     failed_login_count: Mapped[int] = mapped_column(default=0, nullable=False)
     locked_until: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)

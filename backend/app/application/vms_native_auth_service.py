@@ -210,10 +210,12 @@ def invalidate_vms_native_sessions(user: AdminUser) -> None:
     user.direct_owner_sessions_valid_after = datetime.now(timezone.utc)
 
 
-def _mark_owner_credential_established(user: AdminUser, when: Optional[datetime] = None) -> None:
+def _mark_owner_password_user_established(user: AdminUser, when: Optional[datetime] = None) -> None:
     if not user.is_owner:
         return
-    user.initial_credential_provisioned_at = when or datetime.now(timezone.utc)
+    established_at = when or datetime.now(timezone.utc)
+    user.owner_password_user_established = True
+    user.initial_credential_provisioned_at = established_at
 
 
 def set_user_password(
@@ -229,20 +231,24 @@ def set_user_password(
     user.password_hash = hash_password(new_password)
     user.password_changed_at = datetime.now(timezone.utc)
     user.auth_provider = VMS_NATIVE_AUTH_PROVIDER
-    _mark_owner_credential_established(user)
+    _mark_owner_password_user_established(user)
     if clear_force_change:
         user.force_password_change = False
     db.flush()
 
 
 def _provision_bootstrap_password(user: AdminUser, raw_password: str) -> None:
-    """Hash env/bootstrap credentials without policy validation; require change if weak."""
+    """Hash env/bootstrap credentials without policy validation."""
     from app.application.password_policy import password_meets_policy
 
     user.password_hash = hash_password(raw_password)
     user.password_changed_at = datetime.now(timezone.utc)
     user.auth_provider = VMS_NATIVE_AUTH_PROVIDER
-    user.force_password_change = not password_meets_policy(raw_password)
+    if user.is_owner:
+        # Owner initial credentials are explicitly provisioned and remain valid until changed.
+        user.force_password_change = False
+    else:
+        user.force_password_change = not password_meets_policy(raw_password)
 
 
 def _owner_has_argon2_hash(owner: AdminUser) -> bool:
@@ -252,12 +258,11 @@ def _owner_has_argon2_hash(owner: AdminUser) -> bool:
 def provision_owner_password_if_needed(db: Session, owner: AdminUser) -> None:
     """Idempotently provision owner VMS_NATIVE credentials from env when needed."""
     initial = (settings.global_admin_initial_password or "").strip()
-    now = datetime.now(timezone.utc)
 
     if not is_vms_native_provider(owner.auth_provider):
         owner.auth_provider = VMS_NATIVE_AUTH_PROVIDER
 
-    if owner.initial_credential_provisioned_at is not None:
+    if owner.owner_password_user_established:
         return
 
     if (
@@ -266,7 +271,6 @@ def provision_owner_password_if_needed(db: Session, owner: AdminUser) -> None:
         and _owner_has_argon2_hash(owner)
         and verify_password(owner.password_hash, initial)
     ):
-        owner.initial_credential_provisioned_at = now
         owner.failed_login_count = 0
         owner.locked_until = None
         db.flush()
@@ -278,10 +282,21 @@ def provision_owner_password_if_needed(db: Session, owner: AdminUser) -> None:
         db.flush()
         return
 
+    had_hash = bool(owner.password_hash)
     _provision_bootstrap_password(owner, initial)
-    owner.initial_credential_provisioned_at = now
     owner.failed_login_count = 0
     owner.locked_until = None
+    db.flush()
+    AuditService(db).record(
+        action="OWNER_INITIAL_CREDENTIAL_PROVISIONED",
+        entity_type="admin_user",
+        entity_id=str(owner.id),
+        actor_email=owner.email,
+        metadata={
+            "auth_provider": VMS_NATIVE_AUTH_PROVIDER,
+            "reprovisioned": had_hash,
+        },
+    )
     db.flush()
 
 
